@@ -45,7 +45,7 @@ datagen = ImageDataGenerator(
     horizontal_flip=True,
     fill_mode='nearest'
 )
-Augmented images and labels are created and resized:
+
 
 
 # Example code for generating augmented data
@@ -63,20 +63,17 @@ model = Sequential()
 # Add custom layers
 # Compile the model with Adam optimizer
 Training the Model
-python
-Copy code
+
 history = model.fit(datagen.flow(X_train_normalized, y_train, batch_size=32),
                     epochs=25,
                     validation_data=(X_test_normalized, y_test),
                     callbacks=[early_stopping])
-Evaluation
+# Evaluation
 Evaluate the model's performance on the test set and visualize the results.
 
 accuracy = model.evaluate(X_test_normalized, y_test)[1]
 print("Test Accuracy:", accuracy)
 Plotting Learning Curves
-
-
 
 plt.plot(history.history['accuracy'], label='Training Accuracy')
 plt.plot(history.history['val_accuracy'], label='Validation Accuracy')
@@ -84,13 +81,18 @@ plt.xlabel('Epoch')
 plt.ylabel('Accuracy')
 plt.legend()
 plt.show()
+![image](https://github.com/Diwanbhoomika/image_correctness_analysis/assets/114594523/a7b2bb75-00b7-4f4e-88e3-34652b0a93c4)
 
-Confusion Matrix
+
+# Confusion Matrix
 conf_mat = confusion_matrix(y_test, y_pred)
 sns.heatmap(conf_mat, annot=True, fmt='d', cmap='Blues')
 plt.show()
 
-ROC Curve
+![image](https://github.com/Diwanbhoomika/image_correctness_analysis/assets/114594523/5c360b55-d84a-4b64-bb95-e08b5e8c65a6)
+
+
+# ROC Curve
 fpr, tpr, _ = roc_curve(y_test, y_prob)
 plt.plot(fpr, tpr, color='darkorange', label=f'ROC curve (area = {roc_auc:.2f})')
 plt.xlabel('False Positive Rate')
@@ -98,16 +100,19 @@ plt.ylabel('True Positive Rate')
 plt.title('ROC Curve')
 plt.legend(loc='lower right')
 plt.show()
-Usage
-To use the trained model to predict new images:
+
+![image](https://github.com/Diwanbhoomika/image_correctness_analysis/assets/114594523/b434cf0c-442b-4e60-ab89-a340f642aa78)
 
 
+# Usage
 new_image_paths = ["/content/real_image.png", "/content/fake_image.png"]
 new_images = [preprocess_image(path) for path in new_image_paths]
 predictions = model.predict(new_images)
 binary_predictions = (predictions > 0.7).astype(int)
-Results
+
+# Results
 Display results with the new images:
+![image](https://github.com/Diwanbhoomika/image_correctness_analysis/assets/114594523/f03179dc-2c3b-4ff2-a721-c0361849db8c)
 
 
 for i, (path, prediction) in enumerate(zip(new_image_paths, binary_predictions)):
