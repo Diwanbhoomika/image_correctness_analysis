@@ -111,7 +111,7 @@ predictions = model.predict(new_images)
 binary_predictions = (predictions > 0.7).astype(int)
 
 # Results
-Display results with the new images:
+
 ![image](https://github.com/Diwanbhoomika/image_correctness_analysis/assets/114594523/f03179dc-2c3b-4ff2-a721-c0361849db8c)
 
 
